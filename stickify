@@ -2,6 +2,10 @@
 <html>
     <head>
         <title>Stickify</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="https://png.pngtree.com/png-vector/20221212/ourmid/pngtree-yellow-sticky-note-with-paper-clip-vector-illustration-png-image_6521154.png">
         <style>
             body {
                 margin: 0;
@@ -38,6 +42,13 @@
                 background-color: transparent;
                 outline: 0px;
                 z-index: 1;
+                font-family: "Permanent Marker", cursive;
+                font-weight: 400;
+                font-style: normal;
+                overflow: hidden;
+                overflow-wrap: break-word;
+                word-break: break-all;
+                white-space: pre-wrap;
             }
             .grabBar {
                 position: absolute;
@@ -88,36 +99,39 @@
                 width: 20%;
                 background-color: #fff740;
             }
-            .colorScribble {
+            .colorCircle {
                 position: absolute;
+                border-radius: 50%;
                 height: 15%;
-                width: 70%;
+                aspect-ratio: 1 / 1;
     	        left: 50%;
     	        -ms-transform: translate(-50%, 0%);
     	        transform: translate(-50%, 0%);
+                background-color: black;
+                border: 1px dotted white;
             }
-            .colorScribble:hover {
+            .colorCircle:hover {
                 cursor: pointer;
             }
-            #yellowScribble {
+            #yellowCircle {
                 top: 4.5%;
-                fill: #fff740;
+                background-color: #fff740;
             }
-            #pinkScribble {
+            #pinkCircle {
                 top: 23.5%;
-                fill: #ff6fae;
+                background-color: #ff6fae;
             }
-            #orangeScribble {
+            #orangeCircle {
                 top: 42.5%;
-                fill: #ff9f40;
+                background-color: #ff9f40;
             }
-            #greenScribble {
+            #greenCircle {
                 top: 61.5%;
-                fill: #5cd65c;
+                background-color: #5cd65c;
             }
-            #blueScribble {
+            #blueCircle {
                 top: 80.5%;
-                fill: #4fc3ff;
+                background-color: #4fc3ff;
             }
             #createNote {
                 height: 80%;
@@ -156,6 +170,23 @@
             #bgImgButton:active {
                 border-style: inset;
             }
+            #resetImgButton {
+                height: 80%;
+                aspect-ratio: 1 / 1;
+                position: absolute;
+                top: 10%;
+                right: 6%;
+                background-color: transparent;
+                border-style: outset;
+                font-size: 2rem;
+                text-align: center;
+            }
+            #resetImgButton:hover {
+                cursor: pointer;
+            }
+            #resetImgButton:active {
+                border-style: inset;
+            }
             #clearNotes {
                 height: 80%;
                 aspect-ratio: 1 / 1;
@@ -182,6 +213,7 @@
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M14 10V17M10 10V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <input type="file" id="bgImgChange" accept="image/*">
+            <button id="resetImgButton" title="Reset Background" onclick="resetBG();" type="button">↻</button>
             <button id="bgImgButton" type="button" title="Custom Background">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.2639 15.9375L12.5958 14.2834C11.7909 13.4851 11.3884 13.086 10.9266 12.9401C10.5204 12.8118 10.0838 12.8165 9.68048 12.9536C9.22188 13.1095 8.82814 13.5172 8.04068 14.3326L4.04409 18.2801M14.2639 15.9375L14.6053 15.599C15.4112 14.7998 15.8141 14.4002 16.2765 14.2543C16.6831 14.126 17.12 14.1311 17.5236 14.2687C17.9824 14.4251 18.3761 14.8339 19.1634 15.6514L20 16.4934M14.2639 15.9375L18.275 19.9565M18.275 19.9565C17.9176 20 17.4543 20 16.8 20H7.2C6.07989 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4.12796 18.7313 4.07512 18.5321 4.04409 18.2801M18.275 19.9565C18.5293 19.9256 18.7301 19.8727 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V16.4934M4.04409 18.2801C4 17.9221 4 17.4575 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.07989 4 7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.4934M17 8.99989C17 10.1045 16.1046 10.9999 15 10.9999C13.8954 10.9999 13 10.1045 13 8.99989C13 7.89532 13.8954 6.99989 15 6.99989C16.1046 6.99989 17 7.89532 17 8.99989Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
             </button>
@@ -285,11 +317,6 @@
                     <div class="cornerFlap" title="Peel Off" onclick="removeNote(this);"></div>
                     <div class="largeNoteBG"></div>
                     <div class="rightNoteBG">
-                        <svg onclick="colorChange(this, 'yellow');" class="colorScribble" id="yellowScribble" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 46.205 46.205"xml:space="preserve"><g><g><path d="M26.485,43.39c-2.407,0-4.629-0.832-6.38-2.466c-2.729-2.545-3.581-6.527-2.172-10.146c1.862-4.779,5.877-8.689,10.63-10.619c-1.466-0.635-3.747-0.799-7.128,0.83c-0.452,0.218-1.107,0.615-1.801,1.036c-3.514,2.133-10.827,6.57-16.615,0.377c-2.452-2.623-3.481-6.221-2.826-9.871C0.917,8.5,3.522,5.094,7.339,3.185c1.733-0.863,3.832-0.163,4.696,1.565c0.864,1.729,0.163,3.831-1.565,4.696c-1.822,0.911-3.058,2.487-3.388,4.324c-0.153,0.855-0.222,2.493,1.051,3.854c1.475,1.581,3.242,1.226,7.871-1.583c0.841-0.51,1.636-0.992,2.39-1.355c8.958-4.32,15.379-0.856,18.156,3.423c0.184,0.281,0.355,0.582,0.519,0.899c3.444,0.501,6.417,2.261,8.472,5.099c1.134,1.565,0.783,3.755-0.782,4.889c-1.564,1.135-3.754,0.782-4.888-0.782c-0.294-0.405-0.613-0.746-0.951-1.03c0.075,2.323-0.168,4.689-0.762,6.775c-1.11,3.899-3.315,6.726-6.378,8.17C29.989,42.972,28.19,43.39,26.485,43.39zM31.868,26.396c-3.273,1.093-6.169,3.732-7.411,6.924c-0.369,0.945-0.207,1.897,0.423,2.485c0.82,0.765,2.283,0.76,3.912-0.009c1.493-0.704,2.256-2.432,2.633-3.756C31.942,30.223,32.029,28.191,31.868,26.396z"/></g></g></svg>
-                        <svg onclick="colorChange(this, 'pink');" class="colorScribble" id="pinkScribble" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 46.205 46.205"xml:space="preserve"><g><g><path d="M26.485,43.39c-2.407,0-4.629-0.832-6.38-2.466c-2.729-2.545-3.581-6.527-2.172-10.146c1.862-4.779,5.877-8.689,10.63-10.619c-1.466-0.635-3.747-0.799-7.128,0.83c-0.452,0.218-1.107,0.615-1.801,1.036c-3.514,2.133-10.827,6.57-16.615,0.377c-2.452-2.623-3.481-6.221-2.826-9.871C0.917,8.5,3.522,5.094,7.339,3.185c1.733-0.863,3.832-0.163,4.696,1.565c0.864,1.729,0.163,3.831-1.565,4.696c-1.822,0.911-3.058,2.487-3.388,4.324c-0.153,0.855-0.222,2.493,1.051,3.854c1.475,1.581,3.242,1.226,7.871-1.583c0.841-0.51,1.636-0.992,2.39-1.355c8.958-4.32,15.379-0.856,18.156,3.423c0.184,0.281,0.355,0.582,0.519,0.899c3.444,0.501,6.417,2.261,8.472,5.099c1.134,1.565,0.783,3.755-0.782,4.889c-1.564,1.135-3.754,0.782-4.888-0.782c-0.294-0.405-0.613-0.746-0.951-1.03c0.075,2.323-0.168,4.689-0.762,6.775c-1.11,3.899-3.315,6.726-6.378,8.17C29.989,42.972,28.19,43.39,26.485,43.39zM31.868,26.396c-3.273,1.093-6.169,3.732-7.411,6.924c-0.369,0.945-0.207,1.897,0.423,2.485c0.82,0.765,2.283,0.76,3.912-0.009c1.493-0.704,2.256-2.432,2.633-3.756C31.942,30.223,32.029,28.191,31.868,26.396z"/></g></g></svg>
-                        <svg onclick="colorChange(this, 'orange');" class="colorScribble" id="orangeScribble" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 46.205 46.205"xml:space="preserve"><g><g><path d="M26.485,43.39c-2.407,0-4.629-0.832-6.38-2.466c-2.729-2.545-3.581-6.527-2.172-10.146c1.862-4.779,5.877-8.689,10.63-10.619c-1.466-0.635-3.747-0.799-7.128,0.83c-0.452,0.218-1.107,0.615-1.801,1.036c-3.514,2.133-10.827,6.57-16.615,0.377c-2.452-2.623-3.481-6.221-2.826-9.871C0.917,8.5,3.522,5.094,7.339,3.185c1.733-0.863,3.832-0.163,4.696,1.565c0.864,1.729,0.163,3.831-1.565,4.696c-1.822,0.911-3.058,2.487-3.388,4.324c-0.153,0.855-0.222,2.493,1.051,3.854c1.475,1.581,3.242,1.226,7.871-1.583c0.841-0.51,1.636-0.992,2.39-1.355c8.958-4.32,15.379-0.856,18.156,3.423c0.184,0.281,0.355,0.582,0.519,0.899c3.444,0.501,6.417,2.261,8.472,5.099c1.134,1.565,0.783,3.755-0.782,4.889c-1.564,1.135-3.754,0.782-4.888-0.782c-0.294-0.405-0.613-0.746-0.951-1.03c0.075,2.323-0.168,4.689-0.762,6.775c-1.11,3.899-3.315,6.726-6.378,8.17C29.989,42.972,28.19,43.39,26.485,43.39zM31.868,26.396c-3.273,1.093-6.169,3.732-7.411,6.924c-0.369,0.945-0.207,1.897,0.423,2.485c0.82,0.765,2.283,0.76,3.912-0.009c1.493-0.704,2.256-2.432,2.633-3.756C31.942,30.223,32.029,28.191,31.868,26.396z"/></g></g></svg>
-                        <svg onclick="colorChange(this, 'green');" class="colorScribble" id="greenScribble" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 46.205 46.205"xml:space="preserve"><g><g><path d="M26.485,43.39c-2.407,0-4.629-0.832-6.38-2.466c-2.729-2.545-3.581-6.527-2.172-10.146c1.862-4.779,5.877-8.689,10.63-10.619c-1.466-0.635-3.747-0.799-7.128,0.83c-0.452,0.218-1.107,0.615-1.801,1.036c-3.514,2.133-10.827,6.57-16.615,0.377c-2.452-2.623-3.481-6.221-2.826-9.871C0.917,8.5,3.522,5.094,7.339,3.185c1.733-0.863,3.832-0.163,4.696,1.565c0.864,1.729,0.163,3.831-1.565,4.696c-1.822,0.911-3.058,2.487-3.388,4.324c-0.153,0.855-0.222,2.493,1.051,3.854c1.475,1.581,3.242,1.226,7.871-1.583c0.841-0.51,1.636-0.992,2.39-1.355c8.958-4.32,15.379-0.856,18.156,3.423c0.184,0.281,0.355,0.582,0.519,0.899c3.444,0.501,6.417,2.261,8.472,5.099c1.134,1.565,0.783,3.755-0.782,4.889c-1.564,1.135-3.754,0.782-4.888-0.782c-0.294-0.405-0.613-0.746-0.951-1.03c0.075,2.323-0.168,4.689-0.762,6.775c-1.11,3.899-3.315,6.726-6.378,8.17C29.989,42.972,28.19,43.39,26.485,43.39zM31.868,26.396c-3.273,1.093-6.169,3.732-7.411,6.924c-0.369,0.945-0.207,1.897,0.423,2.485c0.82,0.765,2.283,0.76,3.912-0.009c1.493-0.704,2.256-2.432,2.633-3.756C31.942,30.223,32.029,28.191,31.868,26.396z"/></g></g></svg>
-                        <svg onclick="colorChange(this, 'blue');" class="colorScribble" id="blueScribble" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 46.205 46.205"xml:space="preserve"><g><g><path d="M26.485,43.39c-2.407,0-4.629-0.832-6.38-2.466c-2.729-2.545-3.581-6.527-2.172-10.146c1.862-4.779,5.877-8.689,10.63-10.619c-1.466-0.635-3.747-0.799-7.128,0.83c-0.452,0.218-1.107,0.615-1.801,1.036c-3.514,2.133-10.827,6.57-16.615,0.377c-2.452-2.623-3.481-6.221-2.826-9.871C0.917,8.5,3.522,5.094,7.339,3.185c1.733-0.863,3.832-0.163,4.696,1.565c0.864,1.729,0.163,3.831-1.565,4.696c-1.822,0.911-3.058,2.487-3.388,4.324c-0.153,0.855-0.222,2.493,1.051,3.854c1.475,1.581,3.242,1.226,7.871-1.583c0.841-0.51,1.636-0.992,2.39-1.355c8.958-4.32,15.379-0.856,18.156,3.423c0.184,0.281,0.355,0.582,0.519,0.899c3.444,0.501,6.417,2.261,8.472,5.099c1.134,1.565,0.783,3.755-0.782,4.889c-1.564,1.135-3.754,0.782-4.888-0.782c-0.294-0.405-0.613-0.746-0.951-1.03c0.075,2.323-0.168,4.689-0.762,6.775c-1.11,3.899-3.315,6.726-6.378,8.17C29.989,42.972,28.19,43.39,26.485,43.39zM31.868,26.396c-3.273,1.093-6.169,3.732-7.411,6.924c-0.369,0.945-0.207,1.897,0.423,2.485c0.82,0.765,2.283,0.76,3.912-0.009c1.493-0.704,2.256-2.432,2.633-3.756C31.942,30.223,32.029,28.191,31.868,26.396z"/></g></g></svg>
                         <div id="yellowCircle" title="Yellow" class="colorCircle" onclick="colorChange(this, 'yellow');"></div>
                         <div id="pinkCircle" title="Pink" class="colorCircle" onclick="colorChange(this, 'pink');"></div>
                         <div id="orangeCircle" title="Orange" class="colorCircle" onclick="colorChange(this, 'orange');"></div>
@@ -308,6 +335,7 @@
                 colorChange(note, 'yellow');
                 initializeNote(note);
                 focusNote(note);
+                initializeEditable(note.querySelector(".editable"));
             }
 
             function focusNote(note) {
@@ -337,6 +365,87 @@
             function clearNotes() {
                 document.querySelectorAll(".noteContainer").forEach(note => note.remove());
                 noteCount = 0;
+            }
+
+            function initializeEditable(editable) {
+                let lastValidHTML = '';
+                let lastValidOffset = 0;
+            
+                function getCaretOffset(el) {
+                    const sel = window.getSelection();
+                    if (!sel.rangeCount) return 0;
+                    const range = sel.getRangeAt(0).cloneRange();
+                    range.selectNodeContents(el);
+                    range.setEnd(sel.getRangeAt(0).endContainer, sel.getRangeAt(0).endOffset);
+                    return range.toString().length;
+                }
+            
+                function setCaretOffset(el, offset) {
+                    const sel = window.getSelection();
+                    const range = document.createRange();
+                    let remaining = offset;
+                    let found = false;
+            
+                    function walk(node) {
+                        if (found) return;
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            if (remaining <= node.textContent.length) {
+                                range.setStart(node, remaining);
+                                range.collapse(true);
+                                found = true;
+                            } else {
+                                remaining -= node.textContent.length;
+                            }
+                        } else {
+                            for (const child of node.childNodes) walk(child);
+                        }
+                    }
+            
+                    walk(el);
+                    if (!found) {
+                        range.selectNodeContents(el);
+                        range.collapse(false);
+                    }
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+            
+                function saveState() {
+                    lastValidHTML = editable.innerHTML;
+                    lastValidOffset = getCaretOffset(editable);
+                }
+            
+                function restoreState() {
+                    editable.innerHTML = lastValidHTML;
+                    setCaretOffset(editable, lastValidOffset);
+                }
+            
+                const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+            
+                editable.addEventListener('keydown', e => {
+                    if (!allowedKeys.includes(e.key) && !e.metaKey && !e.ctrlKey) {
+                        saveState();
+                    }
+                });
+            
+                editable.addEventListener('input', () => {
+                    if (editable.scrollHeight > editable.clientHeight || editable.scrollWidth > editable.clientWidth) {
+                        restoreState();
+                    }
+                });
+            
+                editable.addEventListener('paste', e => {
+                    saveState();
+                    setTimeout(() => {
+                        if (editable.scrollHeight > editable.clientHeight || editable.scrollWidth > editable.clientWidth) {
+                            restoreState();
+                        }
+                    }, 0);
+                });
+            }
+
+            function resetBG() {
+                document.body.style.backgroundImage = "url('https://getwallpapers.com/wallpaper/full/c/6/5/96113.jpg')";
             }
         </script>
     </body>
