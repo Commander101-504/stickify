@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Stickify</title>
+        <style>
+            body {
+                margin: 0;
+                background-image: url("https://getwallpapers.com/wallpaper/full/c/6/5/96113.jpg");
+                background-size: cover;
+                background-position: center;
+            }
+            #topBar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 10vh;
+                background-color: #dd9f63;
+                box-shadow: 0px 0px 15px;
+                z-index: 9999;
+            }
+            .noteContainer {
+                position: absolute;
+                top: 100px;
+                left: 10px;
+                height: 250px;
+                width: 250px;
+                background-color: transparent;
+                filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.75));
+                z-index: 2;
+            }
+            .noteContainer > #editable {
+                position: absolute;
+                top: 20%;
+                left: 5%;
+                width: 70%;
+                height: 70%;
+                background-color: transparent;
+                outline: 0px;
+                z-index: 2;
+            }
+            .noteContainer > #grabBar {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 15%;
+                width: 100%;
+                background-color: #fff85c;
+                z-index: 2;
+            }
+            .noteContainer > #cornerFlap {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 20%;
+                aspect-ratio: 1 / 1;
+                max-height: 25%;
+                background: linear-gradient(to bottom right, #fff85c 50%, transparent 50%);
+                z-index: 1;
+                filter: drop-shadow(-2px -2px 3px rgba(0,0,0,0.2));
+            }
+            .noteContainer > #largeNoteBG {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 80%;
+                width: 80%;
+                background-color: #fff740;
+                z-index: 0;
+            } .noteContainer > #bottomNoteBG {
+                position: absolute;
+                top: 80%;
+                left: 0;
+                height: 20%;
+                width: 80%;
+                background-color: #fff740;
+                z-index: 0;
+            }
+            .noteContainer > #rightNoteBG {
+                position: absolute;
+                top: 0;
+                left: 80%;
+                height: 80%;
+                width: 20%;
+                background-color: #fff740;
+                z-index: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="topBar"></div>
+        <div class="noteContainer">
+            <div id="grabBar"></div>
+            <div id="editable" contenteditable="true"></div>
+            <div id="cornerFlap"></div>
+            <div id="largeNoteBG"></div>
+            <div id="rightNoteBG"></div>
+            <div id="bottomNoteBG"></div>
+        </div>
+        <script>
+            function changeFont() {
+                
+            }
+        </script>
+    </body>
+</html>
