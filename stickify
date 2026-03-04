@@ -204,13 +204,53 @@
             #clearNotes:active {
                 border-style: inset;
             }
+            #importNotes {
+                height: 80%;
+                aspect-ratio: 1 / 1;
+                position: absolute;
+                top: 10%;
+                left: 11%;
+                background-color: transparent;
+                border-style: outset;
+                font-size: 2rem;
+                text-align: center;
+            }
+            #importNotes:hover {
+                cursor: pointer;
+            }
+            #importNotes:active {
+                border-style: inset;
+            }
+            #exportNotes {
+                height: 80%;
+                aspect-ratio: 1 / 1;
+                position: absolute;
+                top: 10%;
+                left: 16%;
+                background-color: transparent;
+                border-style: outset;
+                font-size: 2rem;
+                text-align: center;
+            }
+            #exportNotes:hover {
+                cursor: pointer;
+            }
+            #exportNotes:active {
+                border-style: inset;
+            }
         </style>
     </head>
     <body onload="localSetup();">
         <div id="topBar">
             <button id="createNote" title="Add Note" onclick="createNote();" type="button">+</button>
-            <button id="clearNotes" title="Clear Notes" onclick="clearNotes();" type="button">
+            <button id="clearNotes" title="Clear Notes" onclick="clearNotes(true);" type="button">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M14 10V17M10 10V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button id="importNotes" title="Import Notes" onclick="importNotes();" type="button">
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 14L11.2929 14.7071L12 15.4142L12.7071 14.7071L12 14ZM13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44771 11 5L13 5ZM6.29289 9.70711L11.2929 14.7071L12.7071 13.2929L7.70711 8.29289L6.29289 9.70711ZM12.7071 14.7071L17.7071 9.70711L16.2929 8.29289L11.2929 13.2929L12.7071 14.7071ZM13 14L13 5L11 5L11 14L13 14Z" fill="#000000"/><path d="M5 16L5 17C5 18.1046 5.89543 19 7 19L17 19C18.1046 19 19 18.1046 19 17V16" stroke="#000000" stroke-width="2"/></svg>
+            </button>
+            <button id="exportNotes" title="Export Notes" onclick="exportNotes();" type="button">
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5L11.2929 4.29289L12 3.58579L12.7071 4.29289L12 5ZM13 14C13 14.5523 12.5523 15 12 15C11.4477 15 11 14.5523 11 14L13 14ZM6.29289 9.29289L11.2929 4.29289L12.7071 5.70711L7.70711 10.7071L6.29289 9.29289ZM12.7071 4.29289L17.7071 9.29289L16.2929 10.7071L11.2929 5.70711L12.7071 4.29289ZM13 5L13 14L11 14L11 5L13 5Z" fill="#000000"/><path d="M5 16L5 17C5 18.1046 5.89543 19 7 19L17 19C18.1046 19 19 18.1046 19 17V16" stroke="#000000" stroke-width="2"/></svg>
             </button>
             <input type="file" id="bgImgChange" accept="image/*">
             <button id="resetImgButton" title="Reset Background" onclick="resetBG();" type="button">↻</button>
@@ -229,6 +269,7 @@
             let activeNote = null;
             let maxNoteCount = 20;
             let isLoading = true;
+            let savingArray = [];
 
             function initializeNote(note) {
                 const grabBar = note.querySelector(".grabBar");
@@ -370,9 +411,11 @@
                 document.body.style.backgroundImage = `url(${imageURL})`;
             });
             
-            function clearNotes() {
-                let confirmation = confirm("Are you sure you want to clear the notes?");
-                if (!confirmation) return;
+            function clearNotes(isUser) {
+                if (isUser) {
+                    let confirmation = confirm("Are you sure you want to clear the notes?");
+                    if (!confirmation) return;
+                }
                 document.querySelectorAll(".noteContainer").forEach(note => note.remove());
                 noteCount = 0;
                 saveNoteValues();
@@ -463,7 +506,7 @@
 
             function saveNoteValues() {
                 if (isLoading) return;
-                let savingArray = [];
+                savingArray = [];
                 document.querySelectorAll(".noteContainer").forEach(note => {
                     savingArray.push([
                         note.style.left,
@@ -489,6 +532,22 @@
                     newNote.style.zIndex = zIndex;
                 });
                 isLoading = false;
+            }
+
+            function exportNotes() {
+                const confirmation = confirm("Export code will be saved to clipboard.");
+                if (!confirmation) return;
+                saveNoteValues();
+                navigator.clipboard.writeText(JSON.stringify(savingArray));
+            }
+
+            async function importNotes() {
+                const confirmation = confirm("Import code will be imported from clipboard.");
+                if (!confirmation) return;
+                const importedArray = await navigator.clipboard.readText(); // wait for the text
+                clearNotes(false);
+                localStorage.setItem("noteValues", importedArray);
+                localSetup();
             }
         </script>
     </body>
