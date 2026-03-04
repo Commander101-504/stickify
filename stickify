@@ -7,7 +7,8 @@
                 margin: 0;
                 background-image: url("https://getwallpapers.com/wallpaper/full/c/6/5/96113.jpg");
                 background-size: cover;
-                background-position: center;
+                background-position: top;
+                overflow: hidden;
             }
             #topBar {
                 position: absolute;
@@ -27,9 +28,8 @@
                 width: 250px;
                 background-color: transparent;
                 filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.75));
-                z-index: 2;
             }
-            .noteContainer > #editable {
+            .editable {
                 position: absolute;
                 top: 20%;
                 left: 5%;
@@ -37,22 +37,21 @@
                 height: 70%;
                 background-color: transparent;
                 outline: 0px;
-                z-index: 2;
+                z-index: 1;
             }
-            .noteContainer > #grabBar {
+            .grabBar {
                 position: absolute;
                 top: 0;
                 left: 0;
                 height: 15%;
                 width: 100%;
                 background-color: #fff85c;
-                z-index: 2;
                 cursor: grab;
             }
-            .noteContainer > #grabBar:active {
+            .grabBar:active {
                 cursor: grabbing;
             }
-            .noteContainer > #cornerFlap {
+            .cornerFlap {
                 position: absolute;
                 bottom: 0;
                 right: 0;
@@ -60,34 +59,34 @@
                 aspect-ratio: 1 / 1;
                 max-height: 25%;
                 background: linear-gradient(to bottom right, #fff85c 50%, transparent 50%);
-                z-index: 1;
                 filter: drop-shadow(-2px -2px 3px rgba(0,0,0,0.2));
             }
-            .noteContainer > #largeNoteBG {
+            .cornerFlap:hover {
+                cursor: pointer;
+            }
+            .largeNoteBG {
                 position: absolute;
-                top: 0;
+                top: 15%;
                 left: 0;
-                height: 80%;
+                height: 65%;
                 width: 80%;
                 background-color: #fff740;
-                z-index: 0;
-            } .noteContainer > #bottomNoteBG {
+            }
+            .bottomNoteBG {
                 position: absolute;
                 top: 80%;
                 left: 0;
                 height: 20%;
                 width: 80%;
                 background-color: #fff740;
-                z-index: 0;
             }
-            .noteContainer > #rightNoteBG {
+            .rightNoteBG {
                 position: absolute;
                 top: 15%;
                 left: 80%;
                 height: 65%;
                 width: 20%;
                 background-color: #fff740;
-                z-index: 0;
             }
             .colorCircle {
                 position: absolute;
@@ -98,6 +97,10 @@
     	        -ms-transform: translate(-50%, 0%);
     	        transform: translate(-50%, 0%);
                 background-color: black;
+                border: 1px dotted white;
+            }
+            .colorCircle:hover {
+                cursor: pointer;
             }
             #yellowCircle {
                 top: 4.5%;
@@ -119,52 +122,94 @@
                 top: 80.5%;
                 background-color: #4fc3ff;
             }
+            #createNote {
+                height: 80%;
+                aspect-ratio: 1 / 1;
+                position: absolute;
+                top: 10%;
+                left: 1%;
+                background-color: transparent;
+                border-style: outset;
+                font-size: 2rem;
+                text-align: center;
+            }
+            #createNote:hover {
+                cursor: pointer;
+            }
+            #createNote:active {
+                border-style: inset;
+            }
         </style>
     </head>
     <body>
-        <div id="topBar"></div>
+        <div id="topBar">
+            <button id="createNote" title="Add Note" onclick="createNote();">+</button>
+        </div>
         <div class="noteContainer">
-            <div id="grabBar"></div>
-            <div id="editable" contenteditable="true"></div>
-            <div id="cornerFlap"></div>
-            <div id="largeNoteBG"></div>
-            <div id="rightNoteBG">
-                <div id="yellowCircle" class="colorCircle" onclick="colorChange('yellow');"></div>
-                <div id="pinkCircle" class="colorCircle" onclick="colorChange('pink');"></div>
-                <div id="orangeCircle" class="colorCircle" onclick="colorChange('orange');"></div>
-                <div id="greenCircle" class="colorCircle" onclick="colorChange('green');"></div>
-                <div id="blueCircle" class="colorCircle" onclick="colorChange('blue');"></div>
+            <div class="grabBar"></div>
+            <div class="editable" contenteditable="true"></div>
+            <div class="cornerFlap" title="Peel Off" onclick="removeNote(this);"></div>
+            <div class="largeNoteBG"></div>
+            <div class="rightNoteBG">
+                <div id="yellowCircle" title="Yellow" class="colorCircle" onclick="colorChange(this, 'yellow');"></div>
+                <div id="pinkCircle" title="Pink" class="colorCircle" onclick="colorChange(this, 'pink');"></div>
+                <div id="orangeCircle" title="Orange" class="colorCircle" onclick="colorChange(this, 'orange');"></div>
+                <div id="greenCircle" title="Green" class="colorCircle" onclick="colorChange(this, 'green');"></div>
+                <div id="blueCircle" title="Blue" class="colorCircle" onclick="colorChange(this, 'blue');"></div>
             </div>
-            <div id="bottomNoteBG"></div>
+            <div class="bottomNoteBG"></div>
         </div>
         <script>
+            let highestZIndex = 2;
             const note = document.querySelector(".noteContainer");
             const grabBar = document.getElementById("grabBar");
             let isDragging = false;
             let offsetX = 0;
             let offsetY = 0;
+            let noteCount = 1;
+            let activeNote = null;
+            let maxNoteCount = 20;
 
-            grabBar.addEventListener("mousedown", (e) => {
-                isDragging = true;
-                offsetX = e.clientX - note.offsetLeft;
-                offsetY = e.clientY - note.offsetTop;
-                document.body.style.userSelect = "none"
-                note.style.filter = "drop-shadow(5px 5px 25px rgba(0, 0, 0, 0.75))";
+            function initializeNote(note) {
+                const grabBar = note.querySelector(".grabBar");
+            
+                grabBar.addEventListener("mousedown", e => {
+            
+                    activeNote = note;
+                    focusNote(activeNote);
+            
+                    offsetX = e.clientX - note.offsetLeft;
+                    offsetY = e.clientY - note.offsetTop;
+            
+                    document.body.style.userSelect = "none";
+            
+                    note.style.filter = "drop-shadow(5px 5px 25px rgba(0,0,0,0.75))";
+            
+                });
+            
+            }
+            initializeNote(document.querySelector(".noteContainer"));
+
+            document.addEventListener("mousemove", e => {
+                if (!activeNote) return;
+
+                let newX = (e.clientX - offsetX) + "px";
+                let newY = (e.clientY - offsetY) + "px";
+                
+                activeNote.style.left = newX;
+                activeNote.style.top = newY;
             });
 
-            document.addEventListener("mousemove", (e) => {
-                if (!isDragging) return;
-                note.style.left = (e.clientX - offsetX) + "px";
-                note.style.top = (e.clientY - offsetY) + "px";
-            });
-
-            document.addEventListener("mouseup", (e) => {
-                isDragging = false;
+            document.addEventListener("mouseup", () => {
+                if (!activeNote) return;
+            
+                activeNote.style.filter = "drop-shadow(5px 5px 15px rgba(0,0,0,0.75))";
+                activeNote = null;
                 document.body.style.userSelect = "auto";
-                note.style.filter = "drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.75))";
             });
 
-            function colorChange(x) {
+            function colorChange(element, x) {
+                const note = element.closest(".noteContainer"); 
                 let color = "";
                 let accent = "";
                 switch (x) {
@@ -189,18 +234,46 @@
                         accent = "#6fd0ff";
                         break;
                 }
-                let largeBG = document.querySelector("#largeNoteBG");
-                let rightBG = document.querySelector("#rightNoteBG");
-                let bottomBG = document.querySelector("#bottomNoteBG");
-                let grabBar = document.querySelector("#grabBar");
-                let cornerFlap = document.querySelector("#cornerFlap");
+                let largeBG = note.querySelector(".largeNoteBG");
+                let rightBG = note.querySelector(".rightNoteBG");
+                let bottomBG = note.querySelector(".bottomNoteBG");
+                let grabBar = note.querySelector(".grabBar");
+                let cornerFlap = note.querySelector(".cornerFlap");
 
                 largeBG.style.backgroundColor = color;
                 rightBG.style.backgroundColor = color;
                 bottomBG.style.backgroundColor = color;
                 grabBar.style.backgroundColor = accent;
                 cornerFlap.style.background = "linear-gradient(to bottom right, " + accent + " 50%, transparent 50%)";
-                // add accent thingies next
+            }
+
+            function createNote() {
+                if (noteCount >= maxNoteCount) return;
+
+                const original = document.querySelector(".noteContainer");
+            
+                const clone = original.cloneNode(true);
+                const textBox = clone.querySelector(".editable");
+                textBox.innerText = "";
+                colorChange(clone, 'yellow');
+            
+                clone.style.left = ((noteCount * 15) + 10) + "px";
+                clone.style.top = ((noteCount * 15) + 100) + "px";
+                
+                document.body.appendChild(clone);
+                noteCount++;
+            
+                initializeNote(clone);
+                focusNote(clone);
+            }
+
+            function focusNote(note) {
+                highestZIndex += 2;
+                note.style.zIndex = highestZIndex;
+            }
+
+            function removeNote(note) {
+                note.parentNode.remove();
             }
         </script>
     </body>
