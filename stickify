@@ -47,6 +47,10 @@
                 width: 100%;
                 background-color: #fff85c;
                 z-index: 2;
+                cursor: grab;
+            }
+            .noteContainer > #grabBar:active {
+                cursor: grabbing;
             }
             .noteContainer > #cornerFlap {
                 position: absolute;
@@ -78,12 +82,42 @@
             }
             .noteContainer > #rightNoteBG {
                 position: absolute;
-                top: 0;
+                top: 15%;
                 left: 80%;
-                height: 80%;
+                height: 65%;
                 width: 20%;
                 background-color: #fff740;
                 z-index: 0;
+            }
+            .colorCircle {
+                position: absolute;
+                border-radius: 50%;
+                height: 15%;
+                aspect-ratio: 1 / 1;
+    	        left: 50%;
+    	        -ms-transform: translate(-50%, 0%);
+    	        transform: translate(-50%, 0%);
+                background-color: black;
+            }
+            #yellowCircle {
+                top: 4.5%;
+                background-color: #fff740;
+            }
+            #pinkCircle {
+                top: 23.5%;
+                background-color: #ff6fae;
+            }
+            #orangeCircle {
+                top: 42.5%;
+                background-color: #ff9f40;
+            }
+            #greenCircle {
+                top: 61.5%;
+                background-color: #5cd65c;
+            }
+            #blueCircle {
+                top: 80.5%;
+                background-color: #4fc3ff;
             }
         </style>
     </head>
@@ -94,12 +128,79 @@
             <div id="editable" contenteditable="true"></div>
             <div id="cornerFlap"></div>
             <div id="largeNoteBG"></div>
-            <div id="rightNoteBG"></div>
+            <div id="rightNoteBG">
+                <div id="yellowCircle" class="colorCircle" onclick="colorChange('yellow');"></div>
+                <div id="pinkCircle" class="colorCircle" onclick="colorChange('pink');"></div>
+                <div id="orangeCircle" class="colorCircle" onclick="colorChange('orange');"></div>
+                <div id="greenCircle" class="colorCircle" onclick="colorChange('green');"></div>
+                <div id="blueCircle" class="colorCircle" onclick="colorChange('blue');"></div>
+            </div>
             <div id="bottomNoteBG"></div>
         </div>
         <script>
-            function changeFont() {
-                
+            const note = document.querySelector(".noteContainer");
+            const grabBar = document.getElementById("grabBar");
+            let isDragging = false;
+            let offsetX = 0;
+            let offsetY = 0;
+
+            grabBar.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                offsetX = e.clientX - note.offsetLeft;
+                offsetY = e.clientY - note.offsetTop;
+                document.body.style.userSelect = "none"
+                note.style.filter = "drop-shadow(5px 5px 25px rgba(0, 0, 0, 0.75))";
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                if (!isDragging) return;
+                note.style.left = (e.clientX - offsetX) + "px";
+                note.style.top = (e.clientY - offsetY) + "px";
+            });
+
+            document.addEventListener("mouseup", (e) => {
+                isDragging = false;
+                document.body.style.userSelect = "auto";
+                note.style.filter = "drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.75))";
+            });
+
+            function colorChange(x) {
+                let color = "";
+                let accent = "";
+                switch (x) {
+                    case "yellow":
+                        color = "#fff740";
+                        accent = "#fff85c";
+                        break;
+                    case "pink":
+                        color = "#ff6fae";
+                        accent = "#ff8fc2";
+                        break;
+                    case "orange":
+                        color = "#ff9f40";
+                        accent = "#ffb366";
+                        break;
+                    case "green":
+                        color = "#5cd65c";
+                        accent = "#7be67b";
+                        break;
+                    case "blue":
+                        color = "#4fc3ff";
+                        accent = "#6fd0ff";
+                        break;
+                }
+                let largeBG = document.querySelector("#largeNoteBG");
+                let rightBG = document.querySelector("#rightNoteBG");
+                let bottomBG = document.querySelector("#bottomNoteBG");
+                let grabBar = document.querySelector("#grabBar");
+                let cornerFlap = document.querySelector("#cornerFlap");
+
+                largeBG.style.backgroundColor = color;
+                rightBG.style.backgroundColor = color;
+                bottomBG.style.backgroundColor = color;
+                grabBar.style.backgroundColor = accent;
+                cornerFlap.style.background = "linear-gradient(to bottom right, " + accent + " 50%, transparent 50%)";
+                // add accent thingies next
             }
         </script>
     </body>
