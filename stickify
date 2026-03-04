@@ -206,7 +206,7 @@
             }
         </style>
     </head>
-    <body>
+    <body onload="localSetup();">
         <div id="topBar">
             <button id="createNote" title="Add Note" onclick="createNote();" type="button">+</button>
             <button id="clearNotes" title="Clear Notes" onclick="clearNotes();" type="button">
@@ -225,9 +225,10 @@
             let isDragging = false;
             let offsetX = 0;
             let offsetY = 0;
-            let noteCount = 1;
+            let noteCount = 0;
             let activeNote = null;
             let maxNoteCount = 20;
+            let isLoading = true;
 
             function initializeNote(note) {
                 const grabBar = note.querySelector(".grabBar");
@@ -264,10 +265,12 @@
                 activeNote.style.filter = "drop-shadow(5px 5px 15px rgba(0,0,0,0.75))";
                 activeNote = null;
                 document.body.style.userSelect = "auto";
+                saveNoteValues();
             });
 
             function colorChange(element, x) {
-                const note = element.closest(".noteContainer"); 
+                const note = element.closest(".noteContainer") || element;
+                note.setAttribute("data-color", x);
                 let color = "";
                 let accent = "";
                 switch (x) {
@@ -303,6 +306,7 @@
                 bottomBG.style.backgroundColor = color;
                 grabBar.style.backgroundColor = accent;
                 cornerFlap.style.background = "linear-gradient(to bottom right, " + accent + " 50%, transparent 50%)";
+                saveNoteValues();
             }
 
             function createNote() {
@@ -310,6 +314,7 @@
             
                 const note = document.createElement("div");
                 note.className = "noteContainer";
+                note.id = "noteContainer" + noteCount;
                 note.setAttribute("onclick", "focusNote(this);");
                 note.innerHTML = `
                     <div class="grabBar"></div>
@@ -336,6 +341,7 @@
                 initializeNote(note);
                 focusNote(note);
                 initializeEditable(note.querySelector(".editable"));
+                saveNoteValues();
             }
 
             function focusNote(note) {
@@ -345,6 +351,8 @@
 
             function removeNote(note) {
                 note.parentNode.remove();
+                noteCount -= 1;
+                saveNoteValues();
             }
 
             document.getElementById("bgImgButton").onclick = function() {
@@ -363,8 +371,11 @@
             });
             
             function clearNotes() {
+                let confirmation = confirm("Are you sure you want to clear the notes?");
+                if (!confirmation) return;
                 document.querySelectorAll(".noteContainer").forEach(note => note.remove());
                 noteCount = 0;
+                saveNoteValues();
             }
 
             function initializeEditable(editable) {
@@ -432,6 +443,7 @@
                     if (editable.scrollHeight > editable.clientHeight || editable.scrollWidth > editable.clientWidth) {
                         restoreState();
                     }
+                    saveNoteValues();
                 });
             
                 editable.addEventListener('paste', e => {
@@ -446,6 +458,37 @@
 
             function resetBG() {
                 document.body.style.backgroundImage = "url('https://getwallpapers.com/wallpaper/full/c/6/5/96113.jpg')";
+                localStorage.setItem("bgImg", null);
+            }
+
+            function saveNoteValues() {
+                if (isLoading) return;
+                let savingArray = [];
+                document.querySelectorAll(".noteContainer").forEach(note => {
+                    savingArray.push([
+                        note.style.left,
+                        note.style.top,
+                        note.getAttribute("data-color") || "yellow",
+                        note.querySelector(".editable").innerText,
+                        note.style.zIndex
+                    ]);
+                });
+                localStorage.setItem("noteValues", JSON.stringify(savingArray));
+            }
+
+            function localSetup() {
+                isLoading = true;
+                const savedArray = JSON.parse(localStorage.getItem("noteValues") || "[]");
+                savedArray.forEach(([left, top, color, text, zIndex]) => {
+                    createNote();
+                    let newNote = document.querySelector("#noteContainer" + (noteCount - 1));
+                    colorChange(newNote, color);
+                    newNote.querySelector(".editable").innerText = text;
+                    newNote.style.left = left;
+                    newNote.style.top = top;
+                    newNote.style.zIndex = zIndex;
+                });
+                isLoading = false;
             }
         </script>
     </body>
