@@ -104,9 +104,9 @@
                 border-radius: 50%;
                 height: 15%;
                 aspect-ratio: 1 / 1;
-    	        left: 50%;
-    	        -ms-transform: translate(-50%, 0%);
-    	        transform: translate(-50%, 0%);
+                left: 50%;
+                -ms-transform: translate(-50%, 0%);
+                transform: translate(-50%, 0%);
                 background-color: black;
                 border: 1px dotted white;
             }
@@ -133,16 +133,25 @@
                 top: 80.5%;
                 background-color: #4fc3ff;
             }
-            #createNote {
+            .createOptions {
                 height: 80%;
-                aspect-ratio: 1 / 1;
                 position: absolute;
                 top: 10%;
                 left: 1%;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            #createNote {
+                height: 100%;
+                aspect-ratio: 1 / 1;
                 background-color: transparent;
                 border-style: outset;
                 font-size: 2rem;
                 text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             #createNote:hover {
                 cursor: pointer;
@@ -150,6 +159,100 @@
             #createNote:active {
                 border-style: inset;
             }
+
+            /* ── Note Type Dropdown ── */
+            #noteTypeDropdown {
+                position: relative;
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+            #noteTypeBtn {
+                height: 100%;
+                aspect-ratio: 1.6 / 1;
+                background-color: transparent;
+                border-style: outset;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
+                cursor: pointer;
+                padding: 0 4px;
+                box-sizing: border-box;
+            }
+            #noteTypeBtn:hover {
+                background-color: rgba(255,255,255,0.15);
+            }
+            #noteTypeBtn:active {
+                border-style: inset;
+            }
+            #activeTypeIcon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 60%;
+                height: 60%;
+            }
+            #activeTypeIcon svg {
+                width: 100%;
+                height: 100%;
+            }
+            #dropdownArrow {
+                font-size: 1.5rem;
+                line-height: 1;
+                color: #000000;
+                margin-top: 1px;
+                transition: transform 0.15s ease;
+            }
+            #dropdownArrow.open {
+                transform: rotate(180deg);
+            }
+            #dropdownMenu {
+                position: absolute;
+                top: calc(100% + 4px);
+                left: 0;
+                background: #fff8ee;
+                border: 2px solid #c4873a;
+                border-radius: 6px;
+                box-shadow: 3px 6px 16px rgba(0,0,0,0.25);
+                z-index: 99999;
+                min-width: 160px;
+                overflow: hidden;
+                padding: 4px 0;
+            }
+            #dropdownMenu.hidden {
+                display: none;
+            }
+            .dropdownItem {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 7px 12px;
+                cursor: pointer;
+                font-family: sans-serif;
+                font-size: 0.82rem;
+                color: #333;
+                transition: background 0.1s;
+            }
+            .dropdownItem:hover {
+                background: #ffe8c2;
+            }
+            .dropdownItem.active {
+                background: #ffd28a;
+                font-weight: bold;
+            }
+            .dropdownItem svg {
+                width: 20px;
+                height: 20px;
+                flex-shrink: 0;
+            }
+            .dropdownDivider {
+                height: 1px;
+                background: #e0c090;
+                margin: 4px 8px;
+            }
+
+            /* ── rest of toolbar buttons ── */
             #bgImgChange {
                 display: none;
             }
@@ -164,12 +267,8 @@
                 font-size: 2rem;
                 text-align: center;
             }
-            #bgImgButton:hover {
-                cursor: pointer;
-            }
-            #bgImgButton:active {
-                border-style: inset;
-            }
+            #bgImgButton:hover { cursor: pointer; }
+            #bgImgButton:active { border-style: inset; }
             #resetImgButton {
                 height: 80%;
                 aspect-ratio: 1 / 1;
@@ -181,70 +280,78 @@
                 font-size: 2rem;
                 text-align: center;
             }
-            #resetImgButton:hover {
-                cursor: pointer;
-            }
-            #resetImgButton:active {
-                border-style: inset;
-            }
+            #resetImgButton:hover { cursor: pointer; }
+            #resetImgButton:active { border-style: inset; }
             #clearNotes {
                 height: 80%;
                 aspect-ratio: 1 / 1;
                 position: absolute;
                 top: 10%;
-                left: 6%;
+                left: 12%;
                 background-color: transparent;
                 border-style: outset;
                 font-size: 2rem;
                 text-align: center;
             }
-            #clearNotes:hover {
-                cursor: pointer;
-            }
-            #clearNotes:active {
-                border-style: inset;
-            }
+            #clearNotes:hover { cursor: pointer; }
+            #clearNotes:active { border-style: inset; }
             #importNotes {
                 height: 80%;
                 aspect-ratio: 1 / 1;
                 position: absolute;
                 top: 10%;
-                left: 11%;
+                left: 16.5%;
                 background-color: transparent;
                 border-style: outset;
                 font-size: 2rem;
                 text-align: center;
             }
-            #importNotes:hover {
-                cursor: pointer;
-            }
-            #importNotes:active {
-                border-style: inset;
-            }
+            #importNotes:hover { cursor: pointer; }
+            #importNotes:active { border-style: inset; }
             #exportNotes {
                 height: 80%;
                 aspect-ratio: 1 / 1;
                 position: absolute;
                 top: 10%;
-                left: 16%;
+                left: 21%;
                 background-color: transparent;
                 border-style: outset;
                 font-size: 2rem;
                 text-align: center;
             }
-            #exportNotes:hover {
-                cursor: pointer;
+            #exportNotes:hover { cursor: pointer; }
+            #exportNotes:active { border-style: inset; }
+            .imageNoteArea {
+                overflow: hidden;
+                position: relative;
             }
-            #exportNotes:active {
-                border-style: inset;
+            .imageNoteArea img {
+                display: none;
+                position: absolute;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                object-fit: cover;
+                z-index: 0;
             }
         </style>
     </head>
     <body onload="localSetup();">
         <div id="topBar">
-            <button id="createNote" title="Add Note" onclick="createNote();" type="button">
-                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+            <div class="createOptions">
+                <button id="createNote" title="Add Note" onclick="createNote();" type="button">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+
+                <!-- Custom note type dropdown -->
+                <div id="noteTypeDropdown">
+                    <button id="noteTypeBtn" title="Note Type" onclick="toggleDropdown();" type="button">
+                        <span id="activeTypeIcon"></span>
+                        <span id="dropdownArrow">▾</span>
+                    </button>
+                    <div id="dropdownMenu" class="hidden"></div>
+                </div>
+            </div>
+
             <button id="clearNotes" title="Clear Notes" onclick="clearNotes(true);" type="button">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L17.1991 18.0129C17.129 19.065 17.0939 19.5911 16.8667 19.99C16.6666 20.3412 16.3648 20.6235 16.0011 20.7998C15.588 21 15.0607 21 14.0062 21H9.99377C8.93927 21 8.41202 21 7.99889 20.7998C7.63517 20.6235 7.33339 20.3412 7.13332 19.99C6.90607 19.5911 6.871 19.065 6.80086 18.0129L6 6M4 6H20M16 6L15.7294 5.18807C15.4671 4.40125 15.3359 4.00784 15.0927 3.71698C14.8779 3.46013 14.6021 3.26132 14.2905 3.13878C13.9376 3 13.523 3 12.6936 3H11.3064C10.477 3 10.0624 3 9.70951 3.13878C9.39792 3.26132 9.12208 3.46013 8.90729 3.71698C8.66405 4.00784 8.53292 4.40125 8.27064 5.18807L8 6M14 10V17M10 10V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
@@ -259,15 +366,88 @@
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.06189 13C4.02104 12.6724 4 12.3387 4 12C4 7.58172 7.58172 4 12 4C14.5006 4 16.7332 5.14727 18.2002 6.94416M19.9381 11C19.979 11.3276 20 11.6613 20 12C20 16.4183 16.4183 20 12 20C9.61061 20 7.46589 18.9525 6 17.2916M9 17H6V17.2916M18.2002 4V6.94416M18.2002 6.94416V6.99993L15.2002 7M6 20V17.2916" stroke="#000000" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <button id="bgImgButton" type="button" title="Custom Background">
-                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14.2639 15.9375L12.5958 14.2834C11.7909 13.4851 11.3884 13.086 10.9266 12.9401C10.5204 12.8118 10.0838 12.8165 9.68048 12.9536C9.22188 13.1095 8.82814 13.5172 8.04068 14.3326L4.04409 18.2801M14.2639 15.9375L14.6053 15.599C15.4112 14.7998 15.8141 14.4002 16.2765 14.2543C16.6831 14.126 17.12 14.1311 17.5236 14.2687C17.9824 14.4251 18.3761 14.8339 19.1634 15.6514L20 16.4934M14.2639 15.9375L18.275 19.9565M18.275 19.9565C17.9176 20 17.4543 20 16.8 20H7.2C6.07989 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4.12796 18.7313 4.07512 18.5321 4.04409 18.2801M18.275 19.9565C18.5293 19.9256 18.7301 19.8727 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V16.4934M4.04409 18.2801C4 17.9221 4 17.4575 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.07989 4 7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.4934M17 8.99989C17 10.1045 16.1046 10.9999 15 10.9999C13.8954 10.9999 13 10.1045 13 8.99989C13 7.89532 13.8954 6.99989 15 6.99989C16.1046 6.99989 17 7.89532 17 8.99989Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.2639 15.9375L12.5958 14.2834C11.7909 13.4851 11.3884 13.086 10.9266 12.9401C10.5204 12.8118 10.0838 12.8165 9.68048 12.9536C9.22188 13.1095 8.82814 13.5172 8.04068 14.3326L4.04409 18.2801M14.2639 15.9375L14.6053 15.599C15.4112 14.7998 15.8141 14.4002 16.2765 14.2543C16.6831 14.126 17.12 14.1311 17.5236 14.2687C17.9824 14.4251 18.3761 14.8339 19.1634 15.6514L20 16.4934M14.2639 15.9375L18.275 19.9565M18.275 19.9565C17.9176 20 17.4543 20 16.8 20H7.2C6.07989 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4.12796 18.7313 4.07512 18.5321 4.04409 18.2801M18.275 19.9565C18.5293 19.9256 18.7301 19.8727 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V16.4934M4.04409 18.2801C4 17.9221 4 17.4575 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.07989 4 7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.4934M17 8.99989C17 10.1045 16.1046 10.9999 15 10.9999C13.8954 10.9999 13 10.1045 13 8.99989C13 7.89532 13.8954 6.99989 15 6.99989C16.1046 6.99989 17 7.89532 17 8.99989Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
         </div>
+
         <script>
+            let imageProcessing = false;
+            // ── Note type definitions ──────────────────────────────────────────────────
+            // To add a new type: push a new object here and add a branch in createNote().
+            const noteTypes = [
+                {
+                    id: "text",
+                    label: "Text Note",
+                    svgHTML: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 4V20M17 12V20M6 20H10M15 20H19M13 7V4H3V7M21 14V12H13V14" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+                },
+                {
+                    id: "image",
+                    label: "Image Note",
+                    svgHTML: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.2639 15.9375L12.5958 14.2834C11.7909 13.4851 11.3884 13.086 10.9266 12.9401C10.5204 12.8118 10.0838 12.8165 9.68048 12.9536C9.22188 13.1095 8.82814 13.5172 8.04068 14.3326L4.04409 18.2801M14.2639 15.9375L14.6053 15.599C15.4112 14.7998 15.8141 14.4002 16.2765 14.2543C16.6831 14.126 17.12 14.1311 17.5236 14.2687C17.9824 14.4251 18.3761 14.8339 19.1634 15.6514L20 16.4934M14.2639 15.9375L18.275 19.9565M18.275 19.9565C17.9176 20 17.4543 20 16.8 20H7.2C6.07989 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4.12796 18.7313 4.07512 18.5321 4.04409 18.2801M18.275 19.9565C18.5293 19.9256 18.7301 19.8727 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V16.4934M4.04409 18.2801C4 17.9221 4 17.4575 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.07989 4 7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.4934M17 8.99989C17 10.1045 16.1046 10.9999 15 10.9999C13.8954 10.9999 13 10.1045 13 8.99989C13 7.89532 13.8954 6.99989 15 6.99989C16.1046 6.99989 17 7.89532 17 8.99989Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+                }
+                // Add more note types here as needed:
+                // { id: "checklist", label: "Checklist", svgHTML: `<svg ...>...</svg>` }
+            ];
+
+            let activeNoteType = "text";
+
+            function buildDropdown() {
+                const menu = document.getElementById("dropdownMenu");
+                menu.innerHTML = "";
+                noteTypes.forEach((type, index) => {
+                    const item = document.createElement("div");
+                    item.className = "dropdownItem" + (type.id === activeNoteType ? " active" : "");
+                    item.title = type.label;
+                    item.innerHTML = type.svgHTML + `<span>${type.label}</span>`;
+                    item.onclick = () => selectNoteType(type.id);
+                    menu.appendChild(item);
+                    // Optional: add a divider between items (remove if you don't want it)
+                    if (index < noteTypes.length - 1) {
+                        const divider = document.createElement("div");
+                        divider.className = "dropdownDivider";
+                        menu.appendChild(divider);
+                    }
+                });
+                // Sync the button icon to the active type
+                const active = noteTypes.find(t => t.id === activeNoteType);
+                document.getElementById("activeTypeIcon").innerHTML = active.svgHTML;
+            }
+
+            function selectNoteType(id) {
+                activeNoteType = id;
+                closeDropdown();
+                buildDropdown();
+            }
+
+            function toggleDropdown() {
+                const menu = document.getElementById("dropdownMenu");
+                const arrow = document.getElementById("dropdownArrow");
+                const isHidden = menu.classList.contains("hidden");
+                if (isHidden) {
+                    menu.classList.remove("hidden");
+                    arrow.classList.add("open");
+                } else {
+                    closeDropdown();
+                }
+            }
+
+            function closeDropdown() {
+                document.getElementById("dropdownMenu").classList.add("hidden");
+                document.getElementById("dropdownArrow").classList.remove("open");
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener("click", e => {
+                if (!document.getElementById("noteTypeDropdown").contains(e.target)) {
+                    closeDropdown();
+                }
+            });
+
+            // ── Core app state ────────────────────────────────────────────────────────
             const viewWidth = window.innerWidth;
             const viewHeight = window.innerHeight;
             const bgImageUpload = document.querySelector("#bgImgChange");
             let highestZIndex = 2;
-            const note = document.querySelector(".noteContainer");
             let isDragging = false;
             let offsetX = 0;
             let offsetY = 0;
@@ -279,36 +459,26 @@
 
             function initializeNote(note) {
                 const grabBar = note.querySelector(".grabBar");
-            
                 grabBar.addEventListener("mousedown", e => {
-            
                     activeNote = note;
                     focusNote(activeNote);
-            
                     offsetX = e.clientX - note.offsetLeft;
                     offsetY = e.clientY - note.offsetTop;
-            
                     document.body.style.userSelect = "none";
-            
                     note.style.filter = "drop-shadow(5px 5px 25px rgba(0,0,0,0.75))";
-            
                 });
-            
             }
 
             document.addEventListener("mousemove", e => {
                 if (!activeNote) return;
-
                 let newX = (parseFloat(e.clientX - offsetX) / window.innerWidth * 100) + "%";
                 let newY = (parseFloat(e.clientY - offsetY) / window.innerHeight * 100) + "%";
-                
                 activeNote.style.left = newX;
                 activeNote.style.top = newY;
             });
 
             document.addEventListener("mouseup", () => {
                 if (!activeNote) return;
-            
                 activeNote.style.filter = "drop-shadow(5px 5px 15px rgba(0,0,0,0.75))";
                 activeNote = null;
                 document.body.style.userSelect = "auto";
@@ -321,47 +491,38 @@
                 let color = "";
                 let accent = "";
                 switch (x) {
-                    case "yellow":
-                        color = "#fff740";
-                        accent = "#fff85c";
-                        break;
-                    case "pink":
-                        color = "#ff6fae";
-                        accent = "#ff8fc2";
-                        break;
-                    case "orange":
-                        color = "#ff9f40";
-                        accent = "#ffb366";
-                        break;
-                    case "green":
-                        color = "#5cd65c";
-                        accent = "#7be67b";
-                        break;
-                    case "blue":
-                        color = "#4fc3ff";
-                        accent = "#6fd0ff";
-                        break;
+                    case "yellow": color = "#fff740"; accent = "#fff85c"; break;
+                    case "pink":   color = "#ff6fae"; accent = "#ff8fc2"; break;
+                    case "orange": color = "#ff9f40"; accent = "#ffb366"; break;
+                    case "green":  color = "#5cd65c"; accent = "#7be67b"; break;
+                    case "blue":   color = "#4fc3ff"; accent = "#6fd0ff"; break;
                 }
-                let largeBG = note.querySelector(".largeNoteBG");
-                let rightBG = note.querySelector(".rightNoteBG");
-                let bottomBG = note.querySelector(".bottomNoteBG");
-                let grabBar = note.querySelector(".grabBar");
-                let cornerFlap = note.querySelector(".cornerFlap");
-
-                largeBG.style.backgroundColor = color;
-                rightBG.style.backgroundColor = color;
-                bottomBG.style.backgroundColor = color;
-                grabBar.style.backgroundColor = accent;
-                cornerFlap.style.background = "linear-gradient(to bottom right, " + accent + " 50%, transparent 50%)";
+                note.querySelector(".largeNoteBG").style.backgroundColor = color;
+                note.querySelector(".rightNoteBG").style.backgroundColor = color;
+                note.querySelector(".bottomNoteBG").style.backgroundColor = color;
+                note.querySelector(".grabBar").style.backgroundColor = accent;
+                note.querySelector(".cornerFlap").style.background =
+                    "linear-gradient(to bottom right, " + accent + " 50%, transparent 50%)";
                 saveNoteValues();
             }
 
             function createNote() {
                 if (noteCount >= maxNoteCount) return;
-            
+
+                if (activeNoteType === "text") {
+                    createTextNote();
+                } else if (activeNoteType === "image") {
+                    createImageNote();
+                }
+                // Add more branches here for future note types:
+                // else if (activeNoteType === "checklist") { createChecklistNote(); }
+            }
+
+            function createTextNote() {
                 const note = document.createElement("div");
                 note.className = "noteContainer";
                 note.id = "noteContainer" + noteCount;
+                note.setAttribute("data-type", "text");
                 note.setAttribute("onclick", "focusNote(this);");
                 note.innerHTML = `
                     <div class="grabBar"></div>
@@ -377,18 +538,92 @@
                     </div>
                     <div class="bottomNoteBG"></div>
                 `;
-            
                 note.style.left = ((noteCount * 2) + 2) + "%";
-                note.style.top = ((noteCount * 2) + 12) + "%";
-            
+                note.style.top  = ((noteCount * 2) + 12) + "%";
                 document.body.appendChild(note);
                 noteCount++;
-            
                 colorChange(note, 'yellow');
                 initializeNote(note);
                 focusNote(note);
                 initializeEditable(note.querySelector(".editable"));
                 saveNoteValues();
+            }
+
+            function createImageNote() {
+                const note = document.createElement("div");
+                note.className = "noteContainer";
+                note.id = "noteContainer" + noteCount;
+                note.setAttribute("data-type", "image");
+                note.setAttribute("onclick", "focusNote(this);");
+                note.innerHTML = `
+                    <div class="grabBar"></div>
+                    <div class="cornerFlap" title="Peel Off" onclick="removeNote(this);"></div>
+                    <div class="largeNoteBG" style="display:flex;align-items:center;justify-content:center;overflow-hidden;position:relative">
+                        <label style="cursor:pointer;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.2639 15.9375L12.5958 14.2834C11.7909 13.4851 11.3884 13.086 10.9266 12.9401C10.5204 12.8118 10.0838 12.8165 9.68048 12.9536C9.22188 13.1095 8.82814 13.5172 8.04068 14.3326L4.04409 18.2801M14.2639 15.9375L14.6053 15.599C15.4112 14.7998 15.8141 14.4002 16.2765 14.2543C16.6831 14.126 17.12 14.1311 17.5236 14.2687C17.9824 14.4251 18.3761 14.8339 19.1634 15.6514L20 16.4934M14.2639 15.9375L18.275 19.9565M18.275 19.9565C17.9176 20 17.4543 20 16.8 20H7.2C6.07989 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4.12796 18.7313 4.07512 18.5321 4.04409 18.2801M18.275 19.9565C18.5293 19.9256 18.7301 19.8727 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V16.4934M4.04409 18.2801C4 17.9221 4 17.4575 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.07989 4 7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.4934M17 8.99989C17 10.1045 16.1046 10.9999 15 10.9999C13.8954 10.9999 13 10.1045 13 8.99989C13 7.89532 13.8954 6.99989 15 6.99989C16.1046 6.99989 17 7.89532 17 8.99989Z" stroke="rgba(0,0,0,0.35)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <span style="font-family:sans-serif;font-size:0.65rem;color:rgba(0,0,0,0.4);">Click to add image</span>
+                            <input type="file" accept="image/*" style="display:none;" onchange="loadImageIntoNote(this);">
+                        </label>
+                        <img style="display:none; position:absolute; top:5%; left:%; width:90%; height:90%; object-fit:cover;">
+                    </div>
+                    <div class="rightNoteBG">
+                        <div id="yellowCircle" title="Yellow" class="colorCircle" onclick="colorChange(this, 'yellow');"></div>
+                        <div id="pinkCircle" title="Pink" class="colorCircle" onclick="colorChange(this, 'pink');"></div>
+                        <div id="orangeCircle" title="Orange" class="colorCircle" onclick="colorChange(this, 'orange');"></div>
+                        <div id="greenCircle" title="Green" class="colorCircle" onclick="colorChange(this, 'green');"></div>
+                        <div id="blueCircle" title="Blue" class="colorCircle" onclick="colorChange(this, 'blue');"></div>
+                    </div>
+                    <div class="bottomNoteBG"></div>
+                `;
+                note.style.left = ((noteCount * 2) + 2) + "%";
+                note.style.top  = ((noteCount * 2) + 12) + "%";
+                document.body.appendChild(note);
+                noteCount++;
+                colorChange(note, 'yellow');
+                initializeNote(note);
+                focusNote(note);
+                saveNoteValues();
+            }
+
+            function loadImageIntoNote(input) {
+                const file = input.files[0];
+                if (!file || !file.type.startsWith("image/")) return;
+                const note = input.closest(".noteContainer");
+            
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const tempImg = new Image();
+                    imageProcessing = true;
+                    tempImg.onload = function() {
+                        const canvas = document.createElement("canvas");
+                        const MAX = 600;
+                        const scale = Math.max(MAX / tempImg.width, MAX / tempImg.height);
+                        canvas.width  = Math.round(tempImg.width  * scale);
+                        canvas.height = Math.round(tempImg.height * scale);
+                        canvas.getContext("2d").drawImage(tempImg, 0, 0, canvas.width, canvas.height);
+                        const base64 = canvas.toDataURL("image/jpeg", 0.75);
+                        note.setAttribute("data-img", base64);
+                        applyImageToNote(note, base64);
+                        imageProcessing = false;
+                        try {
+                            saveNoteValues();
+                        } catch(err) {
+                            alert("Image too large to save — try a smaller image.");
+                        }
+                    };
+                    tempImg.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function applyImageToNote(note, base64) {
+                const img   = note.querySelector("img");
+                const label = note.querySelector("label");
+                img.src = base64;
+                img.style.display = "block";
+                label.style.opacity  = "0";
+                label.style.position = "absolute";
+                label.style.zIndex   = "2";
             }
 
             function focusNote(note) {
@@ -409,14 +644,10 @@
             bgImageUpload.addEventListener("change", function() {
                 const file = this.files[0];
                 if (!file) return;
-                if (!file.type.startsWith("image/")) {
-                    alert("Please upload an image.");
-                    return;
-                }
-                const imageURL = URL.createObjectURL(file);
-                document.body.style.backgroundImage = `url(${imageURL})`;
+                if (!file.type.startsWith("image/")) { alert("Please upload an image."); return; }
+                document.body.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
             });
-            
+
             function clearNotes(isUser) {
                 if (isUser) {
                     let confirmation = confirm("Are you sure you want to clear the notes?");
@@ -430,7 +661,7 @@
             function initializeEditable(editable) {
                 let lastValidHTML = '';
                 let lastValidOffset = 0;
-            
+
                 function getCaretOffset(el) {
                     const sel = window.getSelection();
                     if (!sel.rangeCount) return 0;
@@ -439,13 +670,12 @@
                     range.setEnd(sel.getRangeAt(0).endContainer, sel.getRangeAt(0).endOffset);
                     return range.toString().length;
                 }
-            
+
                 function setCaretOffset(el, offset) {
                     const sel = window.getSelection();
                     const range = document.createRange();
                     let remaining = offset;
                     let found = false;
-            
                     function walk(node) {
                         if (found) return;
                         if (node.nodeType === Node.TEXT_NODE) {
@@ -460,47 +690,37 @@
                             for (const child of node.childNodes) walk(child);
                         }
                     }
-            
                     walk(el);
-                    if (!found) {
-                        range.selectNodeContents(el);
-                        range.collapse(false);
-                    }
+                    if (!found) { range.selectNodeContents(el); range.collapse(false); }
                     sel.removeAllRanges();
                     sel.addRange(range);
                 }
-            
+
                 function saveState() {
                     lastValidHTML = editable.innerHTML;
                     lastValidOffset = getCaretOffset(editable);
                 }
-            
+
                 function restoreState() {
                     editable.innerHTML = lastValidHTML;
                     setCaretOffset(editable, lastValidOffset);
                 }
-            
-                const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
-            
+
+                const allowedKeys = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'];
+
                 editable.addEventListener('keydown', e => {
-                    if (!allowedKeys.includes(e.key) && !e.metaKey && !e.ctrlKey) {
-                        saveState();
-                    }
+                    if (!allowedKeys.includes(e.key) && !e.metaKey && !e.ctrlKey) saveState();
                 });
-            
+
                 editable.addEventListener('input', () => {
-                    if (editable.scrollHeight > editable.clientHeight || editable.scrollWidth > editable.clientWidth) {
-                        restoreState();
-                    }
+                    if (editable.scrollHeight > editable.clientHeight || editable.scrollWidth > editable.clientWidth) restoreState();
                     saveNoteValues();
                 });
-            
+
                 editable.addEventListener('paste', e => {
                     saveState();
                     setTimeout(() => {
-                        if (editable.scrollHeight > editable.clientHeight || editable.scrollWidth > editable.clientWidth) {
-                            restoreState();
-                        }
+                        if (editable.scrollHeight > editable.clientHeight || editable.scrollWidth > editable.clientWidth) restoreState();
                     }, 0);
                 });
             }
@@ -511,6 +731,7 @@
             }
 
             function saveNoteValues() {
+                if (isLoading || imageProcessing) return;
                 if (isLoading) return;
                 savingArray = [];
                 document.querySelectorAll(".noteContainer").forEach(note => {
@@ -518,8 +739,10 @@
                         note.style.left,
                         note.style.top,
                         note.getAttribute("data-color") || "yellow",
-                        note.querySelector(".editable").innerText,
-                        note.style.zIndex
+                        note.querySelector(".editable") ? note.querySelector(".editable").innerText : "",
+                        note.style.zIndex,
+                        note.getAttribute("data-type") || "text",
+                        note.getAttribute("data-img") || ""   // ← this must be here
                     ]);
                 });
                 localStorage.setItem("noteValues", JSON.stringify(savingArray));
@@ -527,16 +750,27 @@
 
             function localSetup() {
                 isLoading = true;
+                buildDropdown();
                 const savedArray = JSON.parse(localStorage.getItem("noteValues") || "[]");
-                savedArray.forEach(([left, top, color, text, zIndex]) => {
+                savedArray.forEach(([left, top, color, text, zIndex, type, imgData]) => {
+                    activeNoteType = type || "text";
                     createNote();
-                    let newNote = document.querySelector("#noteContainer" + (noteCount - 1));
+                    const newNote = document.querySelector("#noteContainer" + (noteCount - 1));
                     colorChange(newNote, color);
-                    newNote.querySelector(".editable").innerText = text;
+                    if (newNote.querySelector(".editable")) {
+                        newNote.querySelector(".editable").innerText = text;
+                    }
                     newNote.style.left = left;
                     newNote.style.top = top;
                     newNote.style.zIndex = zIndex;
+                    // Restore image if present
+                    if (imgData && imgData !== "" && newNote.querySelector("img")) {
+                        newNote.setAttribute("data-img", imgData);
+                        applyImageToNote(newNote, imgData);
+                    }
                 });
+                activeNoteType = "text";
+                buildDropdown();
                 isLoading = false;
             }
 
