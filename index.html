@@ -38,7 +38,7 @@
                 top: 20%;
                 left: 5%;
                 width: 70%;
-                height: 70%;
+                height: 60%;
                 background-color: transparent;
                 outline: 0px;
                 z-index: 1;
@@ -49,6 +49,7 @@
                 overflow-wrap: break-word;
                 word-break: break-all;
                 white-space: pre-wrap;
+                color: #1a1a1a;
             }
             .grabBar {
                 position: absolute;
@@ -90,6 +91,11 @@
                 height: 20%;
                 width: 80%;
                 background-color: #fff740;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                padding: 0 6px;
+                box-sizing: border-box;
             }
             .rightNoteBG {
                 position: absolute;
@@ -99,6 +105,7 @@
                 width: 20%;
                 background-color: #fff740;
             }
+            /* ── Note background color circles (right side) ── */
             .colorCircle {
                 position: absolute;
                 border-radius: 50%;
@@ -113,26 +120,30 @@
             .colorCircle:hover {
                 cursor: pointer;
             }
-            #yellowCircle {
-                top: 4.5%;
-                background-color: #fff740;
+            #yellowCircle { top: 4.5%;  background-color: #fff740; }
+            #pinkCircle   { top: 23.5%; background-color: #ff6fae; }
+            #orangeCircle { top: 42.5%; background-color: #ff9f40; }
+            #greenCircle  { top: 61.5%; background-color: #5cd65c; }
+            #blueCircle   { top: 80.5%; background-color: #4fc3ff; }
+
+            /* ── Font color circles (bottom) ── */
+            .fontColorCircle {
+                border-radius: 50%;
+                height: 50%;
+                aspect-ratio: 1 / 1;
+                flex-shrink: 0;
+                border: 1px dotted white;
+                cursor: pointer;
             }
-            #pinkCircle {
-                top: 23.5%;
-                background-color: #ff6fae;
+            .fontColorCircle:hover {
+                cursor: pointer;
             }
-            #orangeCircle {
-                top: 42.5%;
-                background-color: #ff9f40;
+            .fontColorCircle.active-font-color {
+                /*border: 2px solid rgba(0,0,0,0.7);*/
+                /*box-shadow: 0 0 0 2px rgba(255,255,255,0.8);*/
             }
-            #greenCircle {
-                top: 61.5%;
-                background-color: #5cd65c;
-            }
-            #blueCircle {
-                top: 80.5%;
-                background-color: #4fc3ff;
-            }
+
+            /* ── Toolbar ── */
             .createOptions {
                 height: 80%;
                 position: absolute;
@@ -153,12 +164,8 @@
                 align-items: center;
                 justify-content: center;
             }
-            #createNote:hover {
-                cursor: pointer;
-            }
-            #createNote:active {
-                border-style: inset;
-            }
+            #createNote:hover { cursor: pointer; }
+            #createNote:active { border-style: inset; }
 
             /* ── Note Type Dropdown ── */
             #noteTypeDropdown {
@@ -180,12 +187,8 @@
                 padding: 0 4px;
                 box-sizing: border-box;
             }
-            #noteTypeBtn:hover {
-                background-color: rgba(255,255,255,0.15);
-            }
-            #noteTypeBtn:active {
-                border-style: inset;
-            }
+            #noteTypeBtn:hover { background-color: rgba(255,255,255,0.15); }
+            #noteTypeBtn:active { border-style: inset; }
             #activeTypeIcon {
                 display: flex;
                 align-items: center;
@@ -193,10 +196,7 @@
                 width: 60%;
                 height: 60%;
             }
-            #activeTypeIcon svg {
-                width: 100%;
-                height: 100%;
-            }
+            #activeTypeIcon svg { width: 100%; height: 100%; }
             #dropdownArrow {
                 font-size: 1.5rem;
                 line-height: 1;
@@ -204,9 +204,7 @@
                 margin-top: 1px;
                 transition: transform 0.15s ease;
             }
-            #dropdownArrow.open {
-                transform: rotate(180deg);
-            }
+            #dropdownArrow.open { transform: rotate(180deg); }
             #dropdownMenu {
                 position: absolute;
                 top: calc(100% + 4px);
@@ -220,9 +218,7 @@
                 overflow: hidden;
                 padding: 4px 0;
             }
-            #dropdownMenu.hidden {
-                display: none;
-            }
+            #dropdownMenu.hidden { display: none; }
             .dropdownItem {
                 display: flex;
                 align-items: center;
@@ -234,28 +230,13 @@
                 color: #333;
                 transition: background 0.1s;
             }
-            .dropdownItem:hover {
-                background: #ffe8c2;
-            }
-            .dropdownItem.active {
-                background: #ffd28a;
-                font-weight: bold;
-            }
-            .dropdownItem svg {
-                width: 20px;
-                height: 20px;
-                flex-shrink: 0;
-            }
-            .dropdownDivider {
-                height: 1px;
-                background: #e0c090;
-                margin: 4px 8px;
-            }
+            .dropdownItem:hover { background: #ffe8c2; }
+            .dropdownItem.active { background: #ffd28a; font-weight: bold; }
+            .dropdownItem svg { width: 20px; height: 20px; flex-shrink: 0; }
+            .dropdownDivider { height: 1px; background: #e0c090; margin: 4px 8px; }
 
             /* ── rest of toolbar buttons ── */
-            #bgImgChange {
-                display: none;
-            }
+            #bgImgChange { display: none; }
             #bgImgButton {
                 height: 80%;
                 aspect-ratio: 1 / 1;
@@ -342,7 +323,6 @@
                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </button>
 
-                <!-- Custom note type dropdown -->
                 <div id="noteTypeDropdown">
                     <button id="noteTypeBtn" title="Note Type" onclick="toggleDropdown();" type="button">
                         <span id="activeTypeIcon"></span>
@@ -372,8 +352,19 @@
 
         <script>
             let imageProcessing = false;
+
+            // ── Font color options ─────────────────────────────────────────────────────
+            // Colors chosen to be visually distinct on ALL note backgrounds
+            // (yellow #fff740, pink #ff6fae, orange #ff9f40, green #5cd65c, blue #4fc3ff)
+            const fontColors = [
+                { id: "fc-white",  label: "White",  hex: "#ffffff",  border: "rgba(0,0,0,0.35)" },
+                { id: "fc-black",  label: "Black",  hex: "#1a1a1a",  border: "rgba(255,255,255,0.5)" },
+                { id: "fc-red",    label: "Red",    hex: "#cc2200",  border: "rgba(0,0,0,0.25)" },
+                { id: "fc-blue",   label: "Blue",   hex: "#0055cc",  border: "rgba(0,0,0,0.25)" },
+                { id: "fc-green",  label: "Green",  hex: "#007700",  border: "rgba(0,0,0,0.25)" }
+            ];
+
             // ── Note type definitions ──────────────────────────────────────────────────
-            // To add a new type: push a new object here and add a branch in createNote().
             const noteTypes = [
                 {
                     id: "text",
@@ -385,8 +376,6 @@
                     label: "Image Note",
                     svgHTML: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.2639 15.9375L12.5958 14.2834C11.7909 13.4851 11.3884 13.086 10.9266 12.9401C10.5204 12.8118 10.0838 12.8165 9.68048 12.9536C9.22188 13.1095 8.82814 13.5172 8.04068 14.3326L4.04409 18.2801M14.2639 15.9375L14.6053 15.599C15.4112 14.7998 15.8141 14.4002 16.2765 14.2543C16.6831 14.126 17.12 14.1311 17.5236 14.2687C17.9824 14.4251 18.3761 14.8339 19.1634 15.6514L20 16.4934M14.2639 15.9375L18.275 19.9565M18.275 19.9565C17.9176 20 17.4543 20 16.8 20H7.2C6.07989 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4.12796 18.7313 4.07512 18.5321 4.04409 18.2801M18.275 19.9565C18.5293 19.9256 18.7301 19.8727 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V16.4934M4.04409 18.2801C4 17.9221 4 17.4575 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.07989 4 7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.4934M17 8.99989C17 10.1045 16.1046 10.9999 15 10.9999C13.8954 10.9999 13 10.1045 13 8.99989C13 7.89532 13.8954 6.99989 15 6.99989C16.1046 6.99989 17 7.89532 17 8.99989Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
                 }
-                // Add more note types here as needed:
-                // { id: "checklist", label: "Checklist", svgHTML: `<svg ...>...</svg>` }
             ];
 
             let activeNoteType = "text";
@@ -401,14 +390,12 @@
                     item.innerHTML = type.svgHTML + `<span>${type.label}</span>`;
                     item.onclick = () => selectNoteType(type.id);
                     menu.appendChild(item);
-                    // Optional: add a divider between items (remove if you don't want it)
                     if (index < noteTypes.length - 1) {
                         const divider = document.createElement("div");
                         divider.className = "dropdownDivider";
                         menu.appendChild(divider);
                     }
                 });
-                // Sync the button icon to the active type
                 const active = noteTypes.find(t => t.id === activeNoteType);
                 document.getElementById("activeTypeIcon").innerHTML = active.svgHTML;
             }
@@ -422,8 +409,7 @@
             function toggleDropdown() {
                 const menu = document.getElementById("dropdownMenu");
                 const arrow = document.getElementById("dropdownArrow");
-                const isHidden = menu.classList.contains("hidden");
-                if (isHidden) {
+                if (menu.classList.contains("hidden")) {
                     menu.classList.remove("hidden");
                     arrow.classList.add("open");
                 } else {
@@ -436,14 +422,13 @@
                 document.getElementById("dropdownArrow").classList.remove("open");
             }
 
-            // Close dropdown when clicking outside
             document.addEventListener("click", e => {
                 if (!document.getElementById("noteTypeDropdown").contains(e.target)) {
                     closeDropdown();
                 }
             });
 
-            // ── Core app state ────────────────────────────────────────────────────────
+            // ── Core app state ─────────────────────────────────────────────────────────
             const viewWidth = window.innerWidth;
             const viewHeight = window.innerHeight;
             const bgImageUpload = document.querySelector("#bgImgChange");
@@ -485,6 +470,7 @@
                 saveNoteValues();
             });
 
+            // ── Note background color ──────────────────────────────────────────────────
             function colorChange(element, x) {
                 const note = element.closest(".noteContainer") || element;
                 note.setAttribute("data-color", x);
@@ -506,16 +492,45 @@
                 saveNoteValues();
             }
 
+            // ── Font color change ──────────────────────────────────────────────────────
+            function fontColorChange(element, colorId) {
+                const note = element.closest(".noteContainer");
+                const fc = fontColors.find(c => c.id === colorId);
+                if (!fc) return;
+                note.setAttribute("data-font-color", colorId);
+                const editable = note.querySelector(".editable");
+                if (editable) editable.style.color = fc.hex;
+                // Update active ring on circles
+                note.querySelectorAll(".fontColorCircle").forEach(c => {
+                    c.classList.toggle("active-font-color", c.dataset.fontColorId === colorId);
+                });
+                saveNoteValues();
+            }
+
+            // Builds the font-color circle row for a text note's bottomNoteBG
+            function buildFontColorRow(bottomBG) {
+                bottomBG.innerHTML = "";
+                fontColors.forEach(fc => {
+                    const circle = document.createElement("div");
+                    circle.className = "fontColorCircle";
+                    circle.dataset.fontColorId = fc.id;
+                    circle.title = fc.label;
+                    circle.style.backgroundColor = fc.hex;
+                    circle.style.borderColor = "white";
+                    circle.style.borderStyle = "dotted";
+                    circle.onclick = function() { fontColorChange(this, fc.id); };
+                    bottomBG.appendChild(circle);
+                });
+            }
+
+            // ── Note creation ──────────────────────────────────────────────────────────
             function createNote() {
                 if (noteCount >= maxNoteCount) return;
-
                 if (activeNoteType === "text") {
                     createTextNote();
                 } else if (activeNoteType === "image") {
                     createImageNote();
                 }
-                // Add more branches here for future note types:
-                // else if (activeNoteType === "checklist") { createChecklistNote(); }
             }
 
             function createTextNote() {
@@ -531,10 +546,10 @@
                     <div class="largeNoteBG"></div>
                     <div class="rightNoteBG">
                         <div id="yellowCircle" title="Yellow" class="colorCircle" onclick="colorChange(this, 'yellow');"></div>
-                        <div id="pinkCircle" title="Pink" class="colorCircle" onclick="colorChange(this, 'pink');"></div>
+                        <div id="pinkCircle"   title="Pink"   class="colorCircle" onclick="colorChange(this, 'pink');"></div>
                         <div id="orangeCircle" title="Orange" class="colorCircle" onclick="colorChange(this, 'orange');"></div>
-                        <div id="greenCircle" title="Green" class="colorCircle" onclick="colorChange(this, 'green');"></div>
-                        <div id="blueCircle" title="Blue" class="colorCircle" onclick="colorChange(this, 'blue');"></div>
+                        <div id="greenCircle"  title="Green"  class="colorCircle" onclick="colorChange(this, 'green');"></div>
+                        <div id="blueCircle"   title="Blue"   class="colorCircle" onclick="colorChange(this, 'blue');"></div>
                     </div>
                     <div class="bottomNoteBG"></div>
                 `;
@@ -542,11 +557,29 @@
                 note.style.top  = ((noteCount * 2) + 12) + "%";
                 document.body.appendChild(note);
                 noteCount++;
+
+                // Build font color circles in the bottom bar
+                buildFontColorRow(note.querySelector(".bottomNoteBG"));
+
                 colorChange(note, 'yellow');
+                // Apply default font color (black) and mark it active
+                applyFontColor(note, "fc-black");
+
                 initializeNote(note);
                 focusNote(note);
                 initializeEditable(note.querySelector(".editable"));
                 saveNoteValues();
+            }
+
+            // Internal helper — applies font color without triggering extra saves during load
+            function applyFontColor(note, colorId) {
+                const fc = fontColors.find(c => c.id === colorId) || fontColors[1]; // default black
+                note.setAttribute("data-font-color", colorId);
+                const editable = note.querySelector(".editable");
+                if (editable) editable.style.color = fc.hex;
+                note.querySelectorAll(".fontColorCircle").forEach(c => {
+                    c.classList.toggle("active-font-color", c.dataset.fontColorId === colorId);
+                });
             }
 
             function createImageNote() {
@@ -558,23 +591,24 @@
                 note.innerHTML = `
                     <div class="grabBar"></div>
                     <div class="cornerFlap" title="Peel Off" onclick="removeNote(this);"></div>
-                    <div class="largeNoteBG" style="display:flex;align-items:center;justify-content:center;overflow-hidden;position:relative">
+                    <div class="largeNoteBG" style="display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">
                         <label style="cursor:pointer;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
                             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.2639 15.9375L12.5958 14.2834C11.7909 13.4851 11.3884 13.086 10.9266 12.9401C10.5204 12.8118 10.0838 12.8165 9.68048 12.9536C9.22188 13.1095 8.82814 13.5172 8.04068 14.3326L4.04409 18.2801M14.2639 15.9375L14.6053 15.599C15.4112 14.7998 15.8141 14.4002 16.2765 14.2543C16.6831 14.126 17.12 14.1311 17.5236 14.2687C17.9824 14.4251 18.3761 14.8339 19.1634 15.6514L20 16.4934M14.2639 15.9375L18.275 19.9565M18.275 19.9565C17.9176 20 17.4543 20 16.8 20H7.2C6.07989 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4.12796 18.7313 4.07512 18.5321 4.04409 18.2801M18.275 19.9565C18.5293 19.9256 18.7301 19.8727 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V16.4934M4.04409 18.2801C4 17.9221 4 17.4575 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.07989 4 7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.4934M17 8.99989C17 10.1045 16.1046 10.9999 15 10.9999C13.8954 10.9999 13 10.1045 13 8.99989C13 7.89532 13.8954 6.99989 15 6.99989C16.1046 6.99989 17 7.89532 17 8.99989Z" stroke="rgba(0,0,0,0.35)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             <span style="font-family:sans-serif;font-size:0.65rem;color:rgba(0,0,0,0.4);">Click to add image</span>
                             <input type="file" accept="image/*" style="display:none;" onchange="loadImageIntoNote(this);">
                         </label>
-                        <img style="display:none; position:absolute; top:5%; left:%; width:90%; height:90%; object-fit:cover;">
+                        <img style="display:none; position:absolute; top:5%; left:5%; width:90%; height:90%; object-fit:cover;">
                     </div>
                     <div class="rightNoteBG">
                         <div id="yellowCircle" title="Yellow" class="colorCircle" onclick="colorChange(this, 'yellow');"></div>
-                        <div id="pinkCircle" title="Pink" class="colorCircle" onclick="colorChange(this, 'pink');"></div>
+                        <div id="pinkCircle"   title="Pink"   class="colorCircle" onclick="colorChange(this, 'pink');"></div>
                         <div id="orangeCircle" title="Orange" class="colorCircle" onclick="colorChange(this, 'orange');"></div>
-                        <div id="greenCircle" title="Green" class="colorCircle" onclick="colorChange(this, 'green');"></div>
-                        <div id="blueCircle" title="Blue" class="colorCircle" onclick="colorChange(this, 'blue');"></div>
+                        <div id="greenCircle"  title="Green"  class="colorCircle" onclick="colorChange(this, 'green');"></div>
+                        <div id="blueCircle"   title="Blue"   class="colorCircle" onclick="colorChange(this, 'blue');"></div>
                     </div>
                     <div class="bottomNoteBG"></div>
                 `;
+                // Image notes have no font color row — bottomNoteBG stays empty
                 note.style.left = ((noteCount * 2) + 2) + "%";
                 note.style.top  = ((noteCount * 2) + 12) + "%";
                 document.body.appendChild(note);
@@ -589,7 +623,6 @@
                 const file = input.files[0];
                 if (!file || !file.type.startsWith("image/")) return;
                 const note = input.closest(".noteContainer");
-            
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const tempImg = new Image();
@@ -730,9 +763,12 @@
                 localStorage.setItem("bgImg", null);
             }
 
+            // ── Save / Load ────────────────────────────────────────────────────────────
+            // Array layout per note:
+            // [0] left, [1] top, [2] color, [3] text, [4] zIndex,
+            // [5] type, [6] imgData, [7] fontColor
             function saveNoteValues() {
                 if (isLoading || imageProcessing) return;
-                if (isLoading) return;
                 savingArray = [];
                 document.querySelectorAll(".noteContainer").forEach(note => {
                     savingArray.push([
@@ -742,7 +778,8 @@
                         note.querySelector(".editable") ? note.querySelector(".editable").innerText : "",
                         note.style.zIndex,
                         note.getAttribute("data-type") || "text",
-                        note.getAttribute("data-img") || ""   // ← this must be here
+                        note.getAttribute("data-img") || "",
+                        note.getAttribute("data-font-color") || "fc-black"  // [7]
                     ]);
                 });
                 localStorage.setItem("noteValues", JSON.stringify(savingArray));
@@ -752,7 +789,8 @@
                 isLoading = true;
                 buildDropdown();
                 const savedArray = JSON.parse(localStorage.getItem("noteValues") || "[]");
-                savedArray.forEach(([left, top, color, text, zIndex, type, imgData]) => {
+                savedArray.forEach(noteData => {
+                    const [left, top, color, text, zIndex, type, imgData, fontColor] = noteData;
                     activeNoteType = type || "text";
                     createNote();
                     const newNote = document.querySelector("#noteContainer" + (noteCount - 1));
@@ -763,10 +801,13 @@
                     newNote.style.left = left;
                     newNote.style.top = top;
                     newNote.style.zIndex = zIndex;
-                    // Restore image if present
                     if (imgData && imgData !== "" && newNote.querySelector("img")) {
                         newNote.setAttribute("data-img", imgData);
                         applyImageToNote(newNote, imgData);
+                    }
+                    // Restore font color (text notes only)
+                    if (type === "text" || !type) {
+                        applyFontColor(newNote, fontColor || "fc-black");
                     }
                 });
                 activeNoteType = "text";
